@@ -5,11 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jshin <jshin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 17:03:07 by jshin             #+#    #+#             */
-/*   Updated: 2022/05/03 20:02:35 by jshin            ###   ########.fr       */
+/*   Created: 2022/05/03 16:37:59 by jshin             #+#    #+#             */
+/*   Updated: 2022/05/09 01:18:52 by jshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
 
 void	*ft_calloc(size_t count, size_t size)
@@ -61,30 +62,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		str[j++] = s1[i];
 		i++;
 	}
-	i = '\0';
+	i = 0;
 	while (s2[i])
 	{
 		str[j++] = s2[i];
 		i++;
 	}
-	str[j] = '\0';
-	return (str);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*str;
-	size_t	i;
-
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = '\0';
+	str[j] = 0;
 	return (str);
 }

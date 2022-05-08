@@ -5,61 +5,131 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jshin <jshin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 17:03:11 by jshin             #+#    #+#             */
-/*   Updated: 2022/05/03 20:20:18 by jshin            ###   ########.fr       */
+/*   Created: 2022/05/03 14:59:06 by jshin             #+#    #+#             */
+/*   Updated: 2022/05/09 01:18:59 by jshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
 
-char *get_next_line(int fd)
+char	*read_join(int fd, char *save);
+int		nl_in_buf(char *buf);
+char	*resultline(char *save);
+char	*linesave(char *save);
+
+char	*get_next_line(int fd)
 {
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return NULL;
-	static char *next_adr;
-	char *buf;
-	char *line;
-	int ridden_char;
+	static char	*save;
+	char		*res;
 
-	buf = (char *)calloc(BUFFER_SIZE + 1, sizeof(char));
-	if(!buf)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (NULL);
-
-	ridden_char = read(fd, buf, BUFFER_SIZE);
-	if (ridden_char == -1)
-	{
-		free(buf);
+	if (!save)
+		save = (char *)ft_calloc(1, sizeof(char));
+	if (!save)
 		return (NULL);
-	}
-	
-	if(next_adr)
-		buf = next_adr;
-	int i;
-	
-	i = 0;
-	while(buf[i])
-	{
-		if(buf[i] == '\n')
-		{
-
-			next_adr = buf + i + 1;
-			buf[i] = '\0';
-			return (line);
-		}
-		i++;
-	}
-	buf += ridden_char;
-	return buf;
+	save = read_join(fd, save);
+	res = resultline(save);
+	save = linesave(save);
+	return (res);
 }
 
-#include <stdio.h>
-
-int main(void)
+char	*read_join(int fd, char *save)
 {
-	int fd;
-	char	*str;
+	char	*temp;
+	char	*buf;
+	int		rbyte;
 
-	fd = open("test.txt", O_RDONLY);
-	printf("%s\n", str = get_next_line(fd));
-	printf("%s\n", str = get_next_line(fd));
+	buf = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!buf)
+		return (NULL);
+	while (!nl_in_buf(buf))
+	{
+		rbyte = read(fd, buf, BUFFER_SIZE);
+		if (rbyte == -1)
+		{
+			free(save);
+			free(buf);
+			return (NULL);
+		}
+		buf[rbyte] = '\0';
+		if (rbyte == 0)
+			break ;
+		temp = save;
+		save = ft_strjoin(save, buf);
+		free(temp);
+	}
+	free(buf);
+	return (save);
+}
+
+int	nl_in_buf(char *buf)
+{
+	int	i;
+
+	if (!buf)
+		return (0);
+	i = 0;
+	while (buf[i])
+	{
+		if (buf[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*resultline(char *save)
+{
+	char	*res;
+	int		i;
+	int		j;
+
+	if (!save[0])
+		return (NULL);
+	i = 0;
+	while (save[i] && save[i] != '\n')
+		i++;
+	res = ft_calloc(i + 2, sizeof(char));
+	if (!res)
+		return (NULL);
+	j = i;
+	i = 0;
+	while (i < j)
+	{
+		res[i] = save[i];
+		i++;
+	}
+	if (save[i] == '\n')
+		res[i] = '\n';
+	return (res);
+}
+
+char	*linesave(char *save)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (save[i] && save[i] != '\n')
+		i++;
+	if (!save[i])
+	{
+		free(save);
+		return (NULL);
+	}
+	if (save[i] == '\n')
+		j = i + 1;
+	else
+		j = i;
+	new = (char *)ft_calloc(ft_strlen(save) - i + 2, sizeof(char));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (save[j])
+		new[i++] = save[j++];
+	free(save);
+	return (new);
 }
