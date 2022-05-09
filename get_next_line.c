@@ -6,11 +6,10 @@
 /*   By: jshin <jshin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:59:06 by jshin             #+#    #+#             */
-/*   Updated: 2022/05/09 01:18:59 by jshin            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:38:19 by jshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "get_next_line.h"
 
 char	*read_join(int fd, char *save);
@@ -120,10 +119,7 @@ char	*linesave(char *save)
 		free(save);
 		return (NULL);
 	}
-	if (save[i] == '\n')
-		j = i + 1;
-	else
-		j = i;
+	j = i + 1;
 	new = (char *)ft_calloc(ft_strlen(save) - i + 2, sizeof(char));
 	if (!new)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: jshin <jshin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:42:18 by jshin             #+#    #+#             */
-/*   Updated: 2022/05/09 01:19:04 by jshin            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:38:06 by jshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <fcntl.h>
 
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t count, size_t size);

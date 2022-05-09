@@ -6,11 +6,10 @@
 /*   By: jshin <jshin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:37:59 by jshin             #+#    #+#             */
-/*   Updated: 2022/05/09 01:35:32 by jshin            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:38:09 by jshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "get_next_line.h"
 
 void	*ft_calloc(size_t count, size_t size)
