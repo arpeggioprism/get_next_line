@@ -6,7 +6,7 @@
 /*   By: jshin <jshin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:59:06 by jshin             #+#    #+#             */
-/*   Updated: 2022/05/10 17:13:32 by jshin            ###   ########.fr       */
+/*   Updated: 2022/05/10 20:24:53 by jshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (NULL);
-	if (!save)
-		save = (char *)ft_calloc(1, sizeof(char));
-	if (!save)
-		return (NULL);
 	save = read_join(fd, save);
 	res = resultline(save);
 	save = linesave(save);
@@ -40,18 +36,16 @@ char	*read_join(int fd, char *save)
 	char	*buf;
 	int		rbyte;
 
-	buf = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!save)
+		save = ft_calloc(1, sizeof(char));
+	if (!save)
+		return (NULL);
+	buf = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buf)
 		return (NULL);
 	while (!nl_in_buf(buf))
 	{
 		rbyte = read(fd, buf, BUFFER_SIZE);
-		if (rbyte == -1)
-		{
-			free(save);
-			free(buf);
-			return (NULL);
-		}
 		buf[rbyte] = '\0';
 		if (rbyte == 0)
 			break ;
@@ -120,7 +114,7 @@ char	*linesave(char *save)
 		return (NULL);
 	}
 	j = i + 1;
-	new = (char *)ft_calloc(ft_strlen(save) - i + 2, sizeof(char));
+	new = ft_calloc(ft_strlen(save) - i + 2, sizeof(char));
 	if (!new)
 		return (NULL);
 	i = 0;
