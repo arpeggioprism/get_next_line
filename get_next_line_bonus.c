@@ -6,7 +6,7 @@
 /*   By: jshin <jshin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:59:06 by jshin             #+#    #+#             */
-/*   Updated: 2022/05/10 17:21:15 by jshin            ###   ########.fr       */
+/*   Updated: 2022/05/10 18:25:03 by jshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*linesave(char *save);
 
 char	*get_next_line(int fd)
 {
-	static char	*save[1024];
+	static char	*save[FD_SETSIZE];
 	char		*res;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
