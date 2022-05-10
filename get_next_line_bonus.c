@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jshin <jshin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:59:06 by jshin             #+#    #+#             */
-/*   Updated: 2022/05/10 17:13:32 by jshin            ###   ########.fr       */
+/*   Updated: 2022/05/10 17:21:15 by jshin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*read_join(int fd, char *save);
 int		nl_in_buf(char *buf);
@@ -19,18 +19,18 @@ char	*linesave(char *save);
 
 char	*get_next_line(int fd)
 {
-	static char	*save;
+	static char	*save[1024];
 	char		*res;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (NULL);
-	if (!save)
-		save = (char *)ft_calloc(1, sizeof(char));
-	if (!save)
+	if (!save[fd])
+		save[fd] = (char *)ft_calloc(1, sizeof(char));
+	if (!save[fd])
 		return (NULL);
-	save = read_join(fd, save);
-	res = resultline(save);
-	save = linesave(save);
+	save[fd] = read_join(fd, save[fd]);
+	res = resultline(save[fd]);
+	save[fd] = linesave(save[fd]);
 	return (res);
 }
 
